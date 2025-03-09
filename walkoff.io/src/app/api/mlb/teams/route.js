@@ -37,8 +37,15 @@ export async function GET(request) {
     
     // Process data - Extract logo URLs and create a simplified teams object
     const teamsData = response.data.teams.map(team => {
-      // Find logo with "primary" type if available
-      const primaryLogo = team.teamLogos?.find(logo => logo.logoType === "primary") || team.teamLogos?.[0];
+      // Try to create the correct logo URL formats
+      // MLB API often uses different formats
+      
+      // Instead of relying on teamLogos, construct direct URLs
+      const teamLogoUrl = `https://www.mlbstatic.com/team-logos/${team.id}.svg`;
+      const teamLogoUrl2 = `https://content.mlb.com/assets/images/0/${team.id}.png`;
+      const teamLogoUrl3 = `https://www.mlbstatic.com/team-logos/team-cap-on-light/${team.id}.svg`;
+      
+      console.log(`Logo URL for team ${team.id} (${team.name}): ${teamLogoUrl}`);
       
       return {
         id: team.id,
@@ -46,7 +53,9 @@ export async function GET(request) {
         shortName: team.shortName,
         teamName: team.teamName,
         abbreviation: team.abbreviation,
-        logoUrl: primaryLogo?.url || null,
+        logoUrl: teamLogoUrl,
+        logoUrl2: teamLogoUrl2,
+        logoUrl3: teamLogoUrl3,
         primaryColor: team.primaryColor || "#000000",
         secondaryColor: team.secondaryColor || "#FFFFFF"
       };

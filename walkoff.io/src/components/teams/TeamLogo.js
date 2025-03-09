@@ -86,6 +86,28 @@ const TeamLogo = ({
     );
   }
   
+  // We have multiple logo URLs to try in case one fails
+  const [currentLogoUrl, setCurrentLogoUrl] = useState(logoUrl);
+  const [logoUrlIndex, setLogoUrlIndex] = useState(0);
+  
+  // If we have multiple logos from team data, try them in sequence
+  const handleLogoError = () => {
+    if (team && logoUrlIndex < 2) {
+      // Try the next logo URL (logoUrl2 or logoUrl3)
+      const nextIndex = logoUrlIndex + 1;
+      const nextUrl = team[`logoUrl${nextIndex + 1}`];
+      
+      if (nextUrl) {
+        setCurrentLogoUrl(nextUrl);
+        setLogoUrlIndex(nextIndex);
+        return;
+      }
+    }
+    
+    // All URLs failed or no more to try
+    setError(true);
+  };
+  
   // Display logo
   return (
     <div 
@@ -93,12 +115,12 @@ const TeamLogo = ({
       style={{ width: size, height: size }}
     >
       <Image
-        src={logoUrl}
+        src={currentLogoUrl || logoUrl}
         alt={fallbackText || `Team ${teamId} logo`}
         width={size}
         height={size}
         priority={true}
-        onError={() => setError(true)}
+        onError={handleLogoError}
         className="object-contain"
       />
     </div>

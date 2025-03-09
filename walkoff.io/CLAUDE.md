@@ -35,6 +35,10 @@
 - Optimized image loading with Next.js Image component
 - Fallback display when logo can't be loaded
 - Added to game cards and live ticker
+- Multiple logo URL patterns for redundancy:
+  - `https://www.mlbstatic.com/team-logos/${teamId}.svg`
+  - `https://content.mlb.com/assets/images/0/${teamId}.png`
+  - `https://www.mlbstatic.com/team-logos/team-cap-on-light/${teamId}.svg`
 
 ## Caching Strategy
 - In-memory caching with different durations:

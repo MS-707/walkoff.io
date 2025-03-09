@@ -16,6 +16,16 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'img.mlbstatic.com',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.mlbstatic.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'securea.mlb.com',
+        pathname: '/**',
       }
     ]
   }
