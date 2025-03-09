@@ -20,14 +20,18 @@ const TeamLogo = ({
   className = '',
   team = null
 }) => {
-  const [logoUrl, setLogoUrl] = useState(team?.logoUrl || null);
+  const initialLogoUrl = team?.logoUrl || null;
+  const [logoUrl, setLogoUrl] = useState(initialLogoUrl);
+  const [currentLogoUrl, setCurrentLogoUrl] = useState(initialLogoUrl);
+  const [logoUrlIndex, setLogoUrlIndex] = useState(0);
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(!logoUrl);
+  const [loading, setLoading] = useState(!initialLogoUrl);
   
   // If team object is provided with logo, no need to fetch
   useEffect(() => {
     if (team?.logoUrl) {
       setLogoUrl(team.logoUrl);
+      setCurrentLogoUrl(team.logoUrl);
       setLoading(false);
       return;
     }
@@ -45,9 +49,10 @@ const TeamLogo = ({
         })
         .then(data => {
           // Check if we have team data
-          const team = data.teamsById[teamId];
-          if (team?.logoUrl) {
-            setLogoUrl(team.logoUrl);
+          const teamData = data.teamsById[teamId];
+          if (teamData?.logoUrl) {
+            setLogoUrl(teamData.logoUrl);
+            setCurrentLogoUrl(teamData.logoUrl);
           } else {
             setError(true);
           }
@@ -61,34 +66,6 @@ const TeamLogo = ({
         });
     }
   }, [teamId, logoUrl, error, team]);
-  
-  // Fallback display when no logo
-  if (error || (!logoUrl && !loading)) {
-    return (
-      <div 
-        className={`flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden ${className}`}
-        style={{ width: size, height: size }}
-      >
-        <span className="text-xs font-bold text-gray-600 dark:text-gray-300">
-          {fallbackText || (teamId ? `#${teamId}` : 'MLB')}
-        </span>
-      </div>
-    );
-  }
-  
-  // Loading state
-  if (loading) {
-    return (
-      <div 
-        className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden ${className}`}
-        style={{ width: size, height: size }}
-      />
-    );
-  }
-  
-  // We have multiple logo URLs to try in case one fails
-  const [currentLogoUrl, setCurrentLogoUrl] = useState(logoUrl);
-  const [logoUrlIndex, setLogoUrlIndex] = useState(0);
   
   // If we have multiple logos from team data, try them in sequence
   const handleLogoError = () => {
@@ -108,23 +85,46 @@ const TeamLogo = ({
     setError(true);
   };
   
-  // Display logo
-  return (
-    <div 
-      className={`relative rounded-full overflow-hidden ${className}`}
-      style={{ width: size, height: size }}
-    >
-      <Image
-        src={currentLogoUrl || logoUrl}
-        alt={fallbackText || `Team ${teamId} logo`}
-        width={size}
-        height={size}
-        priority={true}
-        onError={handleLogoError}
-        className="object-contain"
+  // Render different states based on loading and error
+  if (error || (!logoUrl && !loading)) {
+    // Fallback display when no logo
+    return (
+      <div 
+        className={`flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden ${className}`}
+        style={{ width: size, height: size }}
+      >
+        <span className="text-xs font-bold text-gray-600 dark:text-gray-300">
+          {fallbackText || (teamId ? `#${teamId}` : 'MLB')}
+        </span>
+      </div>
+    );
+  } else if (loading) {
+    // Loading state
+    return (
+      <div 
+        className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden ${className}`}
+        style={{ width: size, height: size }}
       />
-    </div>
-  );
+    );
+  } else {
+    // Display logo
+    return (
+      <div 
+        className={`relative rounded-full overflow-hidden ${className}`}
+        style={{ width: size, height: size }}
+      >
+        <Image
+          src={currentLogoUrl || logoUrl}
+          alt={fallbackText || `Team ${teamId} logo`}
+          width={size}
+          height={size}
+          priority={true}
+          onError={handleLogoError}
+          className="object-contain"
+        />
+      </div>
+    );
+  }
 };
 
 export default TeamLogo;
