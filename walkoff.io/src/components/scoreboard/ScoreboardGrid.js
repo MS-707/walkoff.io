@@ -1,12 +1,13 @@
 import React from 'react';
 import GameCard from './GameCard';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 const ScoreboardGrid = ({ games, isLoading, error }) => {
   if (isLoading) {
     return (
       <div className="w-full py-12">
         <div className="flex justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <LoadingSpinner size="lg" color="blue" />
         </div>
         <p className="text-center mt-4 text-gray-500">Loading games...</p>
       </div>

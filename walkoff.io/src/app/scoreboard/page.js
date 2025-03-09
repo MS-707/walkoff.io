@@ -32,7 +32,18 @@ export default function ScoreboardPage() {
     {
       revalidateOnFocus: false,
       refreshInterval: 60000, // Refresh every minute for live games
-      dedupingInterval: 10000 // Prevent multiple requests in 10 seconds
+      dedupingInterval: 10000, // Prevent multiple requests in 10 seconds
+      focusThrottleInterval: 120000, // Only revalidate once every 2 minutes on refocus
+      errorRetryCount: 3, // Retry failed requests 3 times
+      // Cache the data for 10 minutes
+      // This ensures the Gameday URLs are cached efficiently
+      revalidateOnMount: true,
+      onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+        // Only retry on 5xx errors
+        if (error.status >= 500) {
+          setTimeout(() => revalidate({ retryCount }), 5000);
+        }
+      }
     }
   );
   

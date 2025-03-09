@@ -59,9 +59,47 @@ const GameCard = ({ game }) => {
     : 'TBD';
   const inning = game?.linescore?.currentInning;
   const inningHalf = game?.linescore?.inningHalf;
-
+  const gameId = game?.gamePk;
+  
+  // Generate MLB Gameday URL
+  const getGamedayUrl = () => {
+    if (!gameId) return null;
+    
+    // MLB's official Gameday URL
+    return `https://www.mlb.com/gameday/${gameId}/live`;
+  };
+  
+  // Handle click to open Gameday
+  const handleGamedayClick = (e) => {
+    e.preventDefault();
+    const gamedayUrl = getGamedayUrl();
+    
+    if (gamedayUrl) {
+      // Open in new tab
+      window.open(gamedayUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+  
+  // Determine if game is clickable (has gameId and isn't in pre-game state)
+  const isClickable = gameId && (gameStatus !== 'Preview' && gameStatus !== 'Scheduled');
+  
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
+    <div 
+      className={`bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow ${
+        isClickable ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-750 relative' : ''
+      }`}
+      onClick={isClickable ? handleGamedayClick : undefined}
+      role={isClickable ? "button" : undefined}
+      aria-label={isClickable ? "Open game details" : undefined}
+    >
+      {isClickable && (
+        <div className="absolute top-2 right-2">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </div>
+      )}
+      
       <div className="flex justify-between items-center mb-3">
         <GameStatus status={gameStatus} />
         <div className="text-sm text-gray-500">
@@ -84,6 +122,12 @@ const GameCard = ({ game }) => {
         score={homeScore}
         isHome={true}
       />
+      
+      {isClickable && (
+        <div className="mt-3 text-center text-xs text-blue-500 dark:text-blue-400 hover:underline">
+          View Gameday
+        </div>
+      )}
     </div>
   );
 };

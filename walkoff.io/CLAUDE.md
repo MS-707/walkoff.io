@@ -3,6 +3,8 @@
 ## Stable Versions
 - v0.2.0-stable: Working navigation with placeholder pages (Scoreboard, Discover, Lists, Community)
 - v0.3.0-mlb-api: MLB Stats API integration with scoreboard implementation
+- v0.4.1-working-logos: MLB team logo integration
+- v0.5.0-gameday-links: Gameday links for game scores
 
 ## Important Commands
 - Start development server: `npm run dev` (runs on http://localhost:3000)
@@ -65,8 +67,15 @@
 - `/src/services/`: API clients and services
 - `/public/`: Static assets
 
+## Gameday Integration
+- Game scores link directly to MLB's Gameday experience
+- Direct URL format: `https://www.mlb.com/gameday/${gameId}/live`
+- Clickable game cards open Gameday in a new tab
+- Live ticker game items link to Gameday for active/completed games
+- Visual indicators show which games have Gameday available
+
 ## Next Steps
 - Player statistics pages
 - Team pages with rosters
 - Stats comparison tools
-- Game detail pages with play-by-play
+- Custom Gameday clone with play-by-play
