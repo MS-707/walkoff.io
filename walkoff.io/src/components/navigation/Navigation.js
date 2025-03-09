@@ -53,6 +53,9 @@ export default function Navigation() {
             <Link href="/scoreboard" className="text-white hover:text-primary transition-colors duration-200">
               Scoreboard
             </Link>
+            <Link href="/advanced-metrics" className="text-white hover:text-primary transition-colors duration-200">
+              Advanced Stats
+            </Link>
             <Link href="/discover" className="text-white hover:text-primary transition-colors duration-200">
               Discover
             </Link>
@@ -106,6 +109,9 @@ export default function Navigation() {
           <div className="flex flex-col pb-6 space-y-4">
             <Link href="/scoreboard" className="text-white hover:text-primary transition-colors py-2">
               Scoreboard
+            </Link>
+            <Link href="/advanced-metrics" className="text-white hover:text-primary transition-colors py-2">
+              Advanced Stats
             </Link>
             <Link href="/discover" className="text-white hover:text-primary transition-colors py-2">
               Discover

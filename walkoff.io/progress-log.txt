@@ -62,4 +62,27 @@ This journey reaffirms that the most powerful technology experiences come not fr
 
 Baseball, at its core, celebrates the beautiful dance between preparation and spontaneity, between strategy and instinct. In this way, our development process has mirrored the very sport we aim to celebrate.
 
+## Advanced Metrics Integration (v0.7.0)
+
+Today we ventured into the realm where baseball transcends its physical form and transforms into pure mathematics - the world of advanced analytics. Like a scout with a radar gun discovering a hidden gem in the minor leagues, we've uncovered the deeper stories that numbers can tell about America's pastime.
+
+The challenge was substantial: integrate the rich statistical world of `pybaseball` with our JavaScript-based application. Two different languages, two different ecosystems, yet sharing a common goal - to illuminate the game's hidden patterns. 
+
+We chose a path of pragmatic innovation:
+1. Design an Advanced Metrics dashboard with visualization capabilities
+2. Create a bridge architecture for future Python integration
+3. Begin with high-quality mock data to validate the UI and interaction patterns
+4. Plan a microservices architecture for production deployment
+
+Like a pitcher who knows when to throw the fastball versus the changeup, we made strategic decisions about caching different data types:
+- Rapid-changing live data: 5-minute cache
+- Player statistics: 12-hour cache
+- Historical data: 24-hour cache
+
+The result is a statistical explorer's paradise - batting metrics, pitching analysis, fielding insights, and the crown jewel of modern baseball analytics: Statcast data. From exit velocity to launch angle, from barrel percentage to sprint speed, the invisible contours of baseball performance are now made visible.
+
+What strikes me most about this journey is how it parallels baseball's own evolution. From a game once guided primarily by gut and tradition to one where advanced analytics inform every decision, our application has grown from simple displays to sophisticated analytical tools. Yet in both cases, the human element remains irreplaceable - the numbers inform but don't dictate, enhance but don't override.
+
+As we step back and admire this new dimension of WalkOff.io, I'm reminded that in both software development and baseball, the most beautiful moments arise when innovation and tradition find their perfect balance.
+
 -- Logged on March 9, 2025
