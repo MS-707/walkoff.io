@@ -5,6 +5,7 @@
 - v0.3.0-mlb-api: MLB Stats API integration with scoreboard implementation
 - v0.4.1-working-logos: MLB team logo integration
 - v0.5.0-gameday-links: Gameday links for game scores
+- v0.6.0-scrolling-ticker: Scrolling ticker banner for live scores
 
 ## Important Commands
 - Start development server: `npm run dev` (runs on http://localhost:3000)
@@ -30,6 +31,7 @@
   - `/api/mlb/players/[playerId]` - Get player details and stats
   - `/api/mlb/leaders` - Get statistical leaders
   - `/api/mlb/teams` - Get all teams with logo information
+  - `/api/mlb/ticker` - Lightweight endpoint optimized for scrolling ticker
 
 ## Team Logo Integration
 - Reusable component: `/src/components/teams/TeamLogo.js`
@@ -45,12 +47,14 @@
 ## Caching Strategy
 - In-memory caching with different durations:
   - Live game data: 5 minute cache
+  - Ticker data: 5 minute cache (separate instance)
   - Player data: 15 minute cache
   - Team data with logos: 24 hour cache
   - Other static data: 60 minute cache
 - Stale-while-revalidate pattern with SWR
 - Variable refresh rates (faster for live games)
 - TeamLogoProvider for application-wide team data access
+- Lightweight API responses for ticker (minimal data fields)
 
 ## Browser Issues
 - If localhost doesn't work in Brave browser, check:
@@ -64,6 +68,9 @@
 - `/src/components/`: React components
 - `/src/components/navigation/`: Navigation components
 - `/src/components/scoreboard/`: Scoreboard components
+- `/src/components/home/`: Homepage components including tickers
+- `/src/components/teams/`: Team-related components
+- `/src/components/ui/`: Reusable UI components like loaders
 - `/src/services/`: API clients and services
 - `/public/`: Static assets
 

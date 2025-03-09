@@ -7,3 +7,32 @@
     @apply bg-base-dark text-text;
   }
 }
+
+/* Animation utilities for ticker */
+@keyframes ticker-slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.ticker-item-hover {
+  transition: all 0.2s ease;
+}
+
+.ticker-item-hover:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .ticker-container {
+    padding: 4px 0;
+  }
+  
+  .ticker-text {
+    font-size: 0.75rem;
+  }
+}
