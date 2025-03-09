@@ -86,3 +86,25 @@ What strikes me most about this journey is how it parallels baseball's own evolu
 As we step back and admire this new dimension of WalkOff.io, I'm reminded that in both software development and baseball, the most beautiful moments arise when innovation and tradition find their perfect balance.
 
 -- Logged on March 9, 2025
+
+## Player Thumbnails & UI Enhancement (v0.7.1)
+
+There's something magical about seeing a player's face next to their statistics - it transforms abstract numbers into human stories. Today's enhancements to our Advanced Metrics section breathe new life into our statistical universe, reminding us that behind every exit velocity measurement and launch angle calculation is a person with dreams, determination, and their own unique journey.
+
+Our 404 errors became an opportunity for deeper integration. Rather than building placeholder pages, we've created direct pathways to MLB's official player profiles, reinforcing our philosophy that WalkOff.io should enhance the MLB experience, not replace it. We're not just fixing broken links; we're building bridges.
+
+The technical implementation revealed fascinating challenges. MLB's image APIs - like the game of baseball itself - have unwritten rules that must be discovered through observation and practice. Our PlayerThumbnail component now acts like a skilled batter, adjusting to different "pitches" (API endpoints) with grace:
+
+1. First attempt: High-resolution headshots from MLB's primary image server
+2. Second attempt: Alternative player cards from their static content delivery network
+3. Final attempt: Fallback to generic player templates with custom overlays
+
+This graceful degradation ensures our users never strike out when seeking player visuals. The component's resilience mirrors what we admire in ballplayers themselves: adaptability and persistence.
+
+The addition of hover tooltips creates those "leaning forward" moments that engage users more deeply. Just as spectators lean forward in their seats when a pitcher winds up with two strikes, our users now lean in to discover key stats that tell the player's story at a glance - batting averages, home runs, and OPS that reveal a hitter's approach; ERA, strikeouts, and WHIP that illuminate a pitcher's effectiveness.
+
+Perhaps most satisfying is how our modular architecture has allowed these enhancements to flow naturally from our existing foundation. The component hierarchy we've created - PlayerThumbnail, PlayerTooltip, PlayerCell - mirrors baseball's own elegant structure where individual excellence combines into team success.
+
+As we close this chapter of development, I'm struck by a final parallel: just as baseball constantly balances tradition and innovation, our codebase now honors MLB's established ecosystem while creating fresh, innovative ways to engage with America's pastime. The game - and our platform - move forward while keeping one foot anchored in what came before.
+
+-- Logged on March 9, 2025 at 19:45

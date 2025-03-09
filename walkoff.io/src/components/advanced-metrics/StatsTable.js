@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import TeamLogo from '@/components/teams/TeamLogo';
+import PlayerCell from '@/components/players/PlayerCell';
 
 const StatsTable = ({ data, config, type }) => {
   const [page, setPage] = useState(1);
@@ -63,12 +63,7 @@ const StatsTable = ({ data, config, type }) => {
                     }`}
                   >
                     {column.key === 'name' ? (
-                      <Link 
-                        href={`/players/${item.id || 'unknown'}`}
-                        className="text-primary hover:underline font-medium flex items-center"
-                      >
-                        {item[column.key] || '-'}
-                      </Link>
+                      <PlayerCell player={item} type={type} />
                     ) : column.key === 'team' ? (
                       <div className="flex items-center">
                         <TeamLogo teamId={item.teamId} size={20} className="mr-2" />
