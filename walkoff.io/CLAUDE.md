@@ -27,14 +27,24 @@
   - `/api/mlb/scoreboard` - Get games for a specific date
   - `/api/mlb/players/[playerId]` - Get player details and stats
   - `/api/mlb/leaders` - Get statistical leaders
+  - `/api/mlb/teams` - Get all teams with logo information
+
+## Team Logo Integration
+- Reusable component: `/src/components/teams/TeamLogo.js`
+- Team data provider: `/src/components/teams/TeamLogoProvider.js`
+- Optimized image loading with Next.js Image component
+- Fallback display when logo can't be loaded
+- Added to game cards and live ticker
 
 ## Caching Strategy
 - In-memory caching with different durations:
   - Live game data: 5 minute cache
   - Player data: 15 minute cache
-  - Static data (leaders, teams): 60 minute cache
+  - Team data with logos: 24 hour cache
+  - Other static data: 60 minute cache
 - Stale-while-revalidate pattern with SWR
 - Variable refresh rates (faster for live games)
+- TeamLogoProvider for application-wide team data access
 
 ## Browser Issues
 - If localhost doesn't work in Brave browser, check:

@@ -1,4 +1,6 @@
 import React from 'react';
+import TeamLogo from '@/components/teams/TeamLogo';
+import { useTeamLogos } from '@/components/teams/TeamLogoProvider';
 
 const GameStatus = ({ status }) => {
   // Different styles based on game status
@@ -17,18 +19,33 @@ const GameStatus = ({ status }) => {
   }
 };
 
-const TeamRow = ({ team, score, isHome }) => (
-  <div className={`flex justify-between items-center py-2 ${isHome ? 'border-t border-gray-200 dark:border-gray-700' : ''}`}>
-    <div className="flex items-center">
-      <div className="w-6 h-6 mr-3">
-        {/* Placeholder for team logo */}
-        <div className="w-full h-full bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+const TeamRow = ({ team, score, isHome }) => {
+  // Use the team logos context
+  const { teamsById } = useTeamLogos();
+  
+  // Get team data from context if available
+  const teamData = teamsById[team.id] || null;
+  
+  // Display team abbreviation as fallback text
+  const fallbackText = team.abbreviation || team.name?.substr(0, 3) || '';
+  
+  return (
+    <div className={`flex justify-between items-center py-2 ${isHome ? 'border-t border-gray-200 dark:border-gray-700' : ''}`}>
+      <div className="flex items-center">
+        <div className="mr-3">
+          <TeamLogo 
+            teamId={team.id} 
+            size={28} 
+            fallbackText={fallbackText}
+            team={teamData}
+          />
+        </div>
+        <span className="font-medium">{team.name}</span>
       </div>
-      <span className="font-medium">{team.name}</span>
+      <div className="text-xl font-bold">{score}</div>
     </div>
-    <div className="text-xl font-bold">{score}</div>
-  </div>
-);
+  );
+};
 
 const GameCard = ({ game }) => {
   // Extract data from game object with fallbacks

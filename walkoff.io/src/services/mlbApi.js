@@ -6,7 +6,8 @@ const BASE_URL = 'https://statsapi.mlb.com/api/v1';
 const cache = new Map();
 const CACHE_DURATION = {
   DEFAULT: 15 * 60 * 1000, // 15 minutes for most data
-  LIVE: 5 * 60 * 1000 // 5 minutes for live data
+  LIVE: 5 * 60 * 1000, // 5 minutes for live data
+  TEAMS: 24 * 60 * 60 * 1000 // 24 hours for team data
 };
 
 /**
@@ -14,8 +15,9 @@ const CACHE_DURATION = {
  * @param {string} endpoint - API endpoint
  * @param {Object} params - Query parameters
  * @param {boolean} isLiveData - Whether this is live game data
+ * @param {string} cacheType - Cache type (LIVE, DEFAULT, TEAMS)
  */
-async function fetchWithCache(endpoint, params = {}, isLiveData = false) {
+async function fetchWithCache(endpoint, params = {}, isLiveData = false, cacheType = null) {
   const queryString = new URLSearchParams(params).toString();
   const url = `${BASE_URL}${endpoint}${queryString ? '?' + queryString : ''}`;
   const cacheKey = url;
@@ -23,8 +25,16 @@ async function fetchWithCache(endpoint, params = {}, isLiveData = false) {
   const now = Date.now();
   const cachedData = cache.get(cacheKey);
   
+  // Determine cache duration based on parameters
+  let cacheDuration = CACHE_DURATION.DEFAULT;
+  if (cacheType && CACHE_DURATION[cacheType]) {
+    cacheDuration = CACHE_DURATION[cacheType];
+  } else if (isLiveData) {
+    cacheDuration = CACHE_DURATION.LIVE;
+  }
+  
   // Return cached data if valid
-  if (cachedData && now - cachedData.timestamp < (isLiveData ? CACHE_DURATION.LIVE : CACHE_DURATION.DEFAULT)) {
+  if (cachedData && now - cachedData.timestamp < cacheDuration) {
     console.log(`Using cached data for: ${url}`);
     return cachedData.data;
   }
@@ -80,17 +90,19 @@ export const fetchLiveGameFeed = async (gameId) => {
 };
 
 /**
- * Get team information
+ * Get team information with logos
  * @param {string} teamId - Optional team ID. If not provided, returns all teams
+ * @param {boolean} includeLogos - Whether to include logo information
  */
-export const fetchTeamInfo = async (teamId = '') => {
+export const fetchTeamInfo = async (teamId = '', includeLogos = true) => {
   const endpoint = teamId ? `/teams/${teamId}` : '/teams';
   const params = {
     sportId: 1,
-    hydrate: 'roster,person'
+    hydrate: includeLogos ? 'team(logo),roster(person)' : 'roster,person'
   };
   
-  return fetchWithCache(endpoint, params);
+  // Use 24-hour caching for team data
+  return fetchWithCache(endpoint, params, false, 'TEAMS');
 };
 
 /**
