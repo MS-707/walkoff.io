@@ -28,8 +28,14 @@ export const createPlayerSlug = (name) => {
 export const getPlayerMlbUrl = (playerName, playerId) => {
   if (!playerId) return '';
   
-  const nameSlug = createPlayerSlug(playerName);
-  return `https://www.mlb.com/player/${nameSlug}/${playerId}`;
+  // MLB.com now uses a simplified format where player ID is the main identifier
+  // The player name slug is still included but not strictly necessary
+  // This format is more reliable and less prone to errors with name formatting
+  return `https://www.mlb.com/player/${playerId}`;
+  
+  // Alternative URL format with name slug if needed in the future:
+  // const nameSlug = createPlayerSlug(playerName);
+  // return `https://www.mlb.com/player/${nameSlug}/${playerId}`;
 };
 
 /**

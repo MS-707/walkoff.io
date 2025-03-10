@@ -10,17 +10,37 @@ export const generateMockBattingStats = (count = 100) => {
                'HOU', 'LAA', 'SEA', 'OAK', 'TEX', 'ATL', 'PHI', 'NYM', 'MIA', 'WSH',
                'MIL', 'CHC', 'STL', 'CIN', 'PIT', 'LAD', 'SD', 'SF', 'ARI', 'COL'];
   
-  const firstNames = ['Mike', 'Aaron', 'José', 'Shohei', 'Juan', 'Bryce', 'Freddie', 'Mookie', 'Ronald', 'Fernando',
-                     'Nolan', 'Alex', 'Francisco', 'Rafael', 'Corey', 'Trea', 'Tim', 'Bo', 'Vladimir', 'Manny'];
-  
-  const lastNames = ['Trout', 'Judge', 'Ramírez', 'Ohtani', 'Soto', 'Harper', 'Freeman', 'Betts', 'Acuña', 'Tatís',
-                    'Arenado', 'Bregman', 'Lindor', 'Devers', 'Seager', 'Turner', 'Anderson', 'Bichette', 'Guerrero', 'Machado'];
+  // Real MLB players with correct MLBAM IDs
+  const players = [
+    { name: 'Mike Trout', id: 545361 },
+    { name: 'Aaron Judge', id: 592450 },
+    { name: 'José Ramírez', id: 608070 },
+    { name: 'Shohei Ohtani', id: 660271 },
+    { name: 'Juan Soto', id: 665742 },
+    { name: 'Bryce Harper', id: 547180 },
+    { name: 'Freddie Freeman', id: 518692 },
+    { name: 'Mookie Betts', id: 605141 },
+    { name: 'Ronald Acuña Jr.', id: 660670 },
+    { name: 'Fernando Tatis Jr.', id: 665487 },
+    { name: 'Nolan Arenado', id: 571448 },
+    { name: 'Alex Bregman', id: 608324 },
+    { name: 'Francisco Lindor', id: 596019 },
+    { name: 'Rafael Devers', id: 646240 },
+    { name: 'Corey Seager', id: 608369 },
+    { name: 'Trea Turner', id: 607208 },
+    { name: 'Tim Anderson', id: 641313 },
+    { name: 'Bo Bichette', id: 666182 },
+    { name: 'Vladimir Guerrero Jr.', id: 665489 },
+    { name: 'Manny Machado', id: 592518 }
+  ];
   
   return Array.from({ length: count }, (_, i) => {
-    const id = 100000 + i;
-    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-    const name = `${firstName} ${lastName}`;
+    // Use real player data if available, otherwise use generated ID
+    const playerIndex = i % players.length;
+    const playerData = players[playerIndex];
+    const id = playerData.id || (100000 + i);
+    const name = playerData.name;
+    
     const team = teams[Math.floor(Math.random() * teams.length)];
     const position = positions[Math.floor(Math.random() * positions.length)];
     const teamId = 108 + Math.floor(Math.random() * 30);
@@ -74,17 +94,36 @@ export const generateMockPitchingStats = (count = 60) => {
                'HOU', 'LAA', 'SEA', 'OAK', 'TEX', 'ATL', 'PHI', 'NYM', 'MIA', 'WSH',
                'MIL', 'CHC', 'STL', 'CIN', 'PIT', 'LAD', 'SD', 'SF', 'ARI', 'COL'];
   
-  const firstNames = ['Gerrit', 'Jacob', 'Max', 'Corbin', 'Shane', 'Justin', 'Zack', 'Walker', 'Clayton', 'Aaron',
-                     'Jack', 'Dylan', 'Alek', 'Sandy', 'Shohei', 'Blake', 'Kevin', 'Lance', 'Luis', 'Tyler'];
-  
-  const lastNames = ['Cole', 'deGrom', 'Scherzer', 'Burnes', 'Bieber', 'Verlander', 'Wheeler', 'Buehler', 'Kershaw', 'Nola',
-                    'Flaherty', 'Cease', 'Manoah', 'Alcantara', 'Ohtani', 'Snell', 'Gausman', 'McCullers', 'Castillo', 'Glasnow'];
+  // Real MLB pitchers with correct MLBAM IDs
+  const players = [
+    { name: 'Gerrit Cole', id: 543037 },
+    { name: 'Jacob deGrom', id: 594798 },
+    { name: 'Max Scherzer', id: 453286 },
+    { name: 'Corbin Burnes', id: 669203 },
+    { name: 'Shane Bieber', id: 669456 },
+    { name: 'Justin Verlander', id: 434378 },
+    { name: 'Zack Wheeler', id: 554430 },
+    { name: 'Walker Buehler', id: 621111 },
+    { name: 'Clayton Kershaw', id: 477132 },
+    { name: 'Aaron Nola', id: 605400 },
+    { name: 'Jack Flaherty', id: 656427 },
+    { name: 'Dylan Cease', id: 656302 },
+    { name: 'Alek Manoah', id: 666201 },
+    { name: 'Sandy Alcantara', id: 645261 },
+    { name: 'Shohei Ohtani', id: 660271 },
+    { name: 'Blake Snell', id: 605483 },
+    { name: 'Kevin Gausman', id: 592332 },
+    { name: 'Lance McCullers Jr.', id: 621121 },
+    { name: 'Luis Castillo', id: 622491 },
+    { name: 'Tyler Glasnow', id: 607192 }
+  ];
   
   return Array.from({ length: count }, (_, i) => {
-    const id = 200000 + i;
-    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-    const name = `${firstName} ${lastName}`;
+    // Use real player data if available, otherwise use generated ID
+    const playerIndex = i % players.length;
+    const playerData = players[playerIndex];
+    const id = playerData.id || (200000 + i);
+    const name = playerData.name;
     const team = teams[Math.floor(Math.random() * teams.length)];
     const teamId = 108 + Math.floor(Math.random() * 30);
     
@@ -146,19 +185,38 @@ export const generateMockFieldingStats = (count = 80) => {
                'HOU', 'LAA', 'SEA', 'OAK', 'TEX', 'ATL', 'PHI', 'NYM', 'MIA', 'WSH',
                'MIL', 'CHC', 'STL', 'CIN', 'PIT', 'LAD', 'SD', 'SF', 'ARI', 'COL'];
   
-  const firstNames = ['Nolan', 'Matt', 'Mookie', 'Andrelton', 'J.T.', 'Kevin', 'Javier', 'Carlos', 'Joey', 'Yadier',
-                     'Brandon', 'Ozzie', 'Trevor', 'Francisco', 'Anthony', 'Manny', 'José', 'Cody', 'Harrison', 'Ke\'Bryan'];
-  
-  const lastNames = ['Arenado', 'Chapman', 'Betts', 'Simmons', 'Realmuto', 'Kiermaier', 'Báez', 'Correa', 'Gallo', 'Molina',
-                    'Crawford', 'Albies', 'Story', 'Lindor', 'Rizzo', 'Machado', 'Ramírez', 'Bellinger', 'Bader', 'Hayes'];
+  // Real MLB fielders with correct MLBAM IDs
+  const players = [
+    { name: 'Nolan Arenado', id: 571448, position: '3B' },
+    { name: 'Matt Chapman', id: 656305, position: '3B' },
+    { name: 'Mookie Betts', id: 605141, position: 'RF' },
+    { name: 'Andrelton Simmons', id: 592743, position: 'SS' },
+    { name: 'J.T. Realmuto', id: 592663, position: 'C' },
+    { name: 'Kevin Kiermaier', id: 595281, position: 'CF' },
+    { name: 'Javier Báez', id: 595879, position: 'SS' },
+    { name: 'Carlos Correa', id: 621043, position: 'SS' },
+    { name: 'Joey Gallo', id: 608336, position: 'RF' },
+    { name: 'Yadier Molina', id: 425877, position: 'C' },
+    { name: 'Brandon Crawford', id: 543063, position: 'SS' },
+    { name: 'Ozzie Albies', id: 645277, position: '2B' },
+    { name: 'Trevor Story', id: 596115, position: 'SS' },
+    { name: 'Francisco Lindor', id: 596019, position: 'SS' },
+    { name: 'Anthony Rizzo', id: 519203, position: '1B' },
+    { name: 'Manny Machado', id: 592518, position: '3B' },
+    { name: 'José Ramírez', id: 608070, position: '3B' },
+    { name: 'Cody Bellinger', id: 641355, position: 'CF' },
+    { name: 'Harrison Bader', id: 664056, position: 'CF' },
+    { name: 'Ke\'Bryan Hayes', id: 663647, position: '3B' }
+  ];
   
   return Array.from({ length: count }, (_, i) => {
-    const id = 300000 + i;
-    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-    const name = `${firstName} ${lastName}`;
+    // Use real player data if available, otherwise use generated ID
+    const playerIndex = i % players.length;
+    const playerData = players[playerIndex];
+    const id = playerData.id || (300000 + i);
+    const name = playerData.name;
+    const position = playerData.position || positions[Math.floor(Math.random() * positions.length)];
     const team = teams[Math.floor(Math.random() * teams.length)];
-    const position = positions[Math.floor(Math.random() * positions.length)];
     const teamId = 108 + Math.floor(Math.random() * 30);
     
     // Generate realistic fielding stats
