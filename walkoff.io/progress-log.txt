@@ -108,3 +108,26 @@ Perhaps most satisfying is how our modular architecture has allowed these enhanc
 As we close this chapter of development, I'm struck by a final parallel: just as baseball constantly balances tradition and innovation, our codebase now honors MLB's established ecosystem while creating fresh, innovative ways to engage with America's pastime. The game - and our platform - move forward while keeping one foot anchored in what came before.
 
 -- Logged on March 9, 2025 at 19:45
+
+## Bug Fix: Resolving Player Data Integrity (v0.7.2)
+
+Today was a reminder that in baseball, as in software development, the details matter. A seemingly minor issue with player names and links on our advanced metrics page revealed itself to be a teachable moment about data integrity and the nuances of working with external APIs.
+
+The problem presented as a curious anomaly - fictional players like "Mookie Ohtani" appearing in our metrics dashboard, with links that led to 404 errors on MLB.com. While initially puzzling, the root cause quickly became clear: our mock data generation was randomly combining first and last names from separate arrays, creating baseball chimeras that don't exist in the real world.
+
+This discovery led us on a journey through MLB's player identification systems. We learned that each player has a unique MLBAM ID (MLB Advanced Media identifier) - a numerical fingerprint that follows them throughout their career. Where we had been using arbitrary IDs for our mock data, the real MLB ecosystem expects these specific identifiers for everything from stats to images to profile pages.
+
+The solution required a more thoughtful approach to mock data. Rather than generating random combinations, we created arrays of genuine MLB players with their correct IDs, ensuring our testing environment mirrors the actual MLB data structure. This one change cascaded into multiple improvements:
+
+1. Players now display their actual names, creating a more realistic and professional experience
+2. Profile links correctly route to MLB.com's player pages using their stable ID-based URL pattern
+3. Player images load more reliably with the correct IDs
+4. Position data in the fielding metrics now accurately reflects players' real positions
+
+Perhaps the most valuable lesson was about API URL design. MLB.com has wisely moved to a simplified URL structure that prioritizes the numeric ID over the potentially error-prone name slug. This approach makes their system more robust against variations in naming conventions, accented characters, and other edge cases.
+
+As we fixed each layer of this issue, I was reminded of baseball's own attention to detail - how a pitcher might adjust their grip by millimeters to perfect a slider, or how a batter's slight shift in stance can transform their swing. In both baseball and development, mastery lives in these small refinements.
+
+With these changes, our advanced metrics platform takes another step toward the majors - more accurate, more reliable, and more connected to the baseball ecosystem it represents.
+
+-- Logged on March 9, 2025 at 22:15
